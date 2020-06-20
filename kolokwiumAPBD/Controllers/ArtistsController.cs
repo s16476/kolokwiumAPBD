@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace kolokwiumAPBD.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/artists")]
     [ApiController]
     public class ArtistsController : ControllerBase
     {
@@ -27,10 +27,11 @@ namespace kolokwiumAPBD.Controllers
             return Ok(artistsService.getArtistInfo(id));
         }
 
-        [HttpPut("{idart}/events/{idev}")]
-        public IActionResult GetArtistInfo(int idart, int idev, RebookRequest request)
+        [Route("events")]
+        [HttpPut]
+        public IActionResult GetArtistInfo(RebookRequest request)
         {
-            return Ok(artistsService.rebookArtist(idart, idev, request));
+            return Ok(artistsService.rebookArtist(request));
         }
 
 

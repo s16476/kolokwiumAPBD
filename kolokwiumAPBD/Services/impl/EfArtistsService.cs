@@ -27,19 +27,13 @@ namespace kolokwiumAPBD.Services
             return new ArtistInfoDTO(arts);
         }
 
-        public RebookDTO rebookArtist(int idart, int idev, RebookRequest request)
+        public RebookDTO rebookArtist(RebookRequest request)
         {
-            var arev = db.Artist_Events.Where(ae => ae.IdArtist == idart && ae.IdEvent == idev).Include(ae => ae.IdEventNavigation).SingleOrDefault();
+            var arev = db.Artist_Events.Where(ae => ae.IdArtist == request.idArtist && ae.IdEvent == request.idEvent).Include(ae => ae.IdEventNavigation).SingleOrDefault();
 
             if (request.performanceDate > arev.IdEventNavigation.StartDate && request.performanceDate < arev.IdEventNavigation.EndDate) {
 
-                var reb = new Artist_Event
-                {
-                    IdArtist = request.idArtist,
-                    IdEvent = request.idEvent,
-                    DateTime = request.performanceDate
-                };
-                db.Attach(reb);
+                arev.DateTime = request.performanceDate;
                 db.SaveChanges();
             }
             return new RebookDTO

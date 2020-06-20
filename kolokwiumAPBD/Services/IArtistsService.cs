@@ -12,6 +12,6 @@ namespace kolokwiumAPBD.Services
 
         public ArtistInfoDTO getArtistInfo(int id);
 
-        public RebookDTO rebookArtist(int idart, int idev, RebookRequest request);
+        public RebookDTO rebookArtist(RebookRequest request);
     }
 }
