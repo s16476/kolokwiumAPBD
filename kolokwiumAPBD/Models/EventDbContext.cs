@@ -39,9 +39,6 @@ namespace kolokwiumAPBD.Models
                 entity.HasMany(e => e.Artist_Events).WithOne().IsRequired();
                 entity.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
 
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
             });
 
             modelBuilder.Entity<Organiser>(entity =>

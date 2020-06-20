@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200620173141_initDB.Designer.cs" />
     <Compile Remove="Migrations\20200620173313_initDB.cs" />
     <Compile Remove="Migrations\20200620173313_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620175557_initDB1.cs" />
+    <Compile Remove="Migrations\20200620175557_initDB1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
