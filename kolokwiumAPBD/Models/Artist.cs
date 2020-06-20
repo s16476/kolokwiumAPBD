@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace kolokwiumAPBD.Models
 {
-    public class Artist
+    public partial class Artist
     {
-        [Key]
         public int IdArtist { get; set; }
         public string Nickname { get; set; }
 

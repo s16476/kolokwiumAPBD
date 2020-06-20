@@ -27,52 +27,52 @@ namespace kolokwiumAPBD.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Artist_Event>()
-                .HasKey(ae => new { ae.IdArtist, ae.IdEvent });
-
-
-            modelBuilder.Entity<Event_Organiser>()
-                .HasKey(eo => new { eo.IdEvent, eo.IdOrganiser});
-
-            modelBuilder.Entity<Artist>(a =>
+            modelBuilder.Entity<Artist>(entity =>
             {
-                a.HasMany(e => e.Artist_Events).WithOne().IsRequired();
+                entity.HasKey(a => a.IdArtist).HasName("Artist_pk");
+                entity.HasMany(e => e.Artist_Events).WithOne().IsRequired();
             });
 
-            modelBuilder.Entity<Event>(a =>
+            modelBuilder.Entity<Event>(entity =>
             {
-                a.HasMany(e => e.Artist_Events).WithOne().IsRequired();
+                entity.HasKey(a => a.IdEvent).HasName("Event_pk");
+                entity.HasMany(e => e.Artist_Events).WithOne().IsRequired();
+                entity.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
+
             });
 
-            modelBuilder.Entity<Artist_Event>(ae =>
+            modelBuilder.Entity<Organiser>(entity =>
             {
-                ae.HasOne<Artist>().WithMany(e => e.Artist_Events).IsRequired();
-            });
-            modelBuilder.Entity<Artist_Event>(ae =>
-            {
-                ae.HasOne<Event>().WithMany(e => e.Artist_Events).IsRequired();
+                entity.HasKey(a => a.IdOrganiser).HasName("Organiser_pk");
+                entity.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
             });
 
-            modelBuilder.Entity<Event>(a =>
+
+            modelBuilder.Entity<Artist_Event>(entity =>
             {
-                a.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
+                entity.HasKey(ae => new { ae.IdArtist, ae.IdEvent }).HasName("Artist_Event_pk");
+
+                entity.HasOne(d => d.IdArtistNavigation).WithMany(e => e.Artist_Events).HasForeignKey(e => e.IdArtist).IsRequired();
+
+                entity.HasOne(d => d.IdEventNavigation).WithMany(e => e.Artist_Events).HasForeignKey(e => e.IdEvent).IsRequired();
+
             });
 
-            modelBuilder.Entity<Organiser>(a =>
+            modelBuilder.Entity<Event_Organiser>(entity =>
             {
-                a.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
+                entity.HasKey(eo => new { eo.IdEvent, eo.IdOrganiser });
+
+                entity.HasOne(e => e.IdEventNavigation).WithMany(e => e.Event_Organisers).HasForeignKey(e => e.IdEvent).IsRequired();
+
+                entity.HasOne(e => e.IdOrganiserNavigation).WithMany(e => e.Event_Organisers).HasForeignKey(e => e.IdOrganiser).IsRequired();
+
             });
 
-            modelBuilder.Entity<Event_Organiser>(ae =>
-            {
-                ae.HasOne<Event>().WithMany(e => e.Event_Organisers).IsRequired();
-            });
 
-            modelBuilder.Entity<Event_Organiser>(ae =>
-            {
-                ae.HasOne<Organiser>().WithMany(e => e.Event_Organisers).IsRequired();
-            });
 
+
+
+               
 
             modelBuilder.Entity<Artist>()
                 .Property(a => a.Nickname)

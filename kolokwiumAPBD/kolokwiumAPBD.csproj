@@ -7,6 +7,20 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200620160610_initDB1.cs" />
     <Compile Remove="Migrations\20200620160610_initDB1.Designer.cs" />
+    <Compile Remove="Migrations\20200620170623_initDB.cs" />
+    <Compile Remove="Migrations\20200620170623_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620171108_initDB.cs" />
+    <Compile Remove="Migrations\20200620171108_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620172431_initDB.cs" />
+    <Compile Remove="Migrations\20200620172431_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620172746_initDB.cs" />
+    <Compile Remove="Migrations\20200620172746_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620172949_initDB.cs" />
+    <Compile Remove="Migrations\20200620172949_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620173141_initDB.cs" />
+    <Compile Remove="Migrations\20200620173141_initDB.Designer.cs" />
+    <Compile Remove="Migrations\20200620173313_initDB.cs" />
+    <Compile Remove="Migrations\20200620173313_initDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

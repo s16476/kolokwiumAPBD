@@ -22,16 +22,16 @@ namespace kolokwiumAPBD.Services
         public ArtistInfoDTO getArtistInfo(int id)
         {
             var arts = db.Artists.Include(a => a.Artist_Events).
-                ThenInclude(ae => ae.Event).
+                ThenInclude(ae => ae.IdEventNavigation).
                 Where(a => a.IdArtist == id).SingleOrDefault();
             return new ArtistInfoDTO(arts);
         }
 
         public RebookDTO rebookArtist(int idart, int idev, RebookRequest request)
         {
-            var arev = db.Artist_Events.Where(ae => ae.IdArtist == idart && ae.IdEvent == idev).Include(ae => ae.Event).SingleOrDefault();
+            var arev = db.Artist_Events.Where(ae => ae.IdArtist == idart && ae.IdEvent == idev).Include(ae => ae.IdEventNavigation).SingleOrDefault();
 
-            if (request.performanceDate > arev.Event.StartDate && request.performanceDate < arev.Event.EndDate) {
+            if (request.performanceDate > arev.IdEventNavigation.StartDate && request.performanceDate < arev.IdEventNavigation.EndDate) {
 
                 var reb = new Artist_Event
                 {

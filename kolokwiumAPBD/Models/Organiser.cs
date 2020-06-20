@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace kolokwiumAPBD.Models
 {
-    public class Organiser
+    public partial class Organiser
     {
-        [Key]
         public int IdOrganiser { get; set; }
 
         public string Name { get; set; }

@@ -10,8 +10,8 @@ using kolokwiumAPBD.Models;
 namespace kolokwiumAPBD.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20200620165831_initDB1")]
-    partial class initDB1
+    [Migration("20200620173539_initDB")]
+    partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,8 @@ namespace kolokwiumAPBD.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.HasKey("IdArtist");
+                    b.HasKey("IdArtist")
+                        .HasName("Artist_pk");
 
                     b.ToTable("Artists");
 
@@ -67,20 +68,11 @@ namespace kolokwiumAPBD.Migrations
                     b.Property<int>("IdEvent")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ArtistIdArtist")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EventIdEvent")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdArtist", "IdEvent");
-
-                    b.HasIndex("ArtistIdArtist");
-
-                    b.HasIndex("EventIdEvent");
+                    b.HasKey("IdArtist", "IdEvent")
+                        .HasName("Artist_Event_pk");
 
                     b.HasIndex("IdEvent");
 
@@ -142,7 +134,8 @@ namespace kolokwiumAPBD.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IdEvent");
+                    b.HasKey("IdEvent")
+                        .HasName("Event_pk");
 
                     b.ToTable("Events");
 
@@ -178,19 +171,9 @@ namespace kolokwiumAPBD.Migrations
                     b.Property<int>("IdOrganiser")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EventIdEvent")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrganiserIdOrganiser")
-                        .HasColumnType("int");
-
                     b.HasKey("IdEvent", "IdOrganiser");
 
-                    b.HasIndex("EventIdEvent");
-
                     b.HasIndex("IdOrganiser");
-
-                    b.HasIndex("OrganiserIdOrganiser");
 
                     b.ToTable("Event_Organisers");
 
@@ -218,7 +201,8 @@ namespace kolokwiumAPBD.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.HasKey("IdOrganiser");
+                    b.HasKey("IdOrganiser")
+                        .HasName("Organiser_pk");
 
                     b.ToTable("Organisers");
 
@@ -237,21 +221,13 @@ namespace kolokwiumAPBD.Migrations
 
             modelBuilder.Entity("kolokwiumAPBD.Models.Artist_Event", b =>
                 {
-                    b.HasOne("kolokwiumAPBD.Models.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistIdArtist");
-
-                    b.HasOne("kolokwiumAPBD.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventIdEvent");
-
-                    b.HasOne("kolokwiumAPBD.Models.Artist", null)
+                    b.HasOne("kolokwiumAPBD.Models.Artist", "IdArtistNavigation")
                         .WithMany("Artist_Events")
                         .HasForeignKey("IdArtist")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("kolokwiumAPBD.Models.Event", null)
+                    b.HasOne("kolokwiumAPBD.Models.Event", "IdEventNavigation")
                         .WithMany("Artist_Events")
                         .HasForeignKey("IdEvent")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -260,25 +236,17 @@ namespace kolokwiumAPBD.Migrations
 
             modelBuilder.Entity("kolokwiumAPBD.Models.Event_Organiser", b =>
                 {
-                    b.HasOne("kolokwiumAPBD.Models.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventIdEvent");
-
-                    b.HasOne("kolokwiumAPBD.Models.Event", null)
+                    b.HasOne("kolokwiumAPBD.Models.Event", "IdEventNavigation")
                         .WithMany("Event_Organisers")
                         .HasForeignKey("IdEvent")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("kolokwiumAPBD.Models.Organiser", null)
+                    b.HasOne("kolokwiumAPBD.Models.Organiser", "IdOrganiserNavigation")
                         .WithMany("Event_Organisers")
                         .HasForeignKey("IdOrganiser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("kolokwiumAPBD.Models.Organiser", "Organiser")
-                        .WithMany()
-                        .HasForeignKey("OrganiserIdOrganiser");
                 });
 #pragma warning restore 612, 618
         }

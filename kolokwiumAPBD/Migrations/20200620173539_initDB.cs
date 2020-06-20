@@ -17,7 +17,7 @@ namespace kolokwiumAPBD.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Artists", x => x.IdArtist);
+                    table.PrimaryKey("Artist_pk", x => x.IdArtist);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,7 +32,7 @@ namespace kolokwiumAPBD.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.IdEvent);
+                    table.PrimaryKey("Event_pk", x => x.IdEvent);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,7 +45,7 @@ namespace kolokwiumAPBD.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organisers", x => x.IdOrganiser);
+                    table.PrimaryKey("Organiser_pk", x => x.IdOrganiser);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,25 +54,11 @@ namespace kolokwiumAPBD.Migrations
                 {
                     IdEvent = table.Column<int>(nullable: false),
                     IdArtist = table.Column<int>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false),
-                    ArtistIdArtist = table.Column<int>(nullable: true),
-                    EventIdEvent = table.Column<int>(nullable: true)
+                    DateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Artist_Events", x => new { x.IdArtist, x.IdEvent });
-                    table.ForeignKey(
-                        name: "FK_Artist_Events_Artists_ArtistIdArtist",
-                        column: x => x.ArtistIdArtist,
-                        principalTable: "Artists",
-                        principalColumn: "IdArtist",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Artist_Events_Events_EventIdEvent",
-                        column: x => x.EventIdEvent,
-                        principalTable: "Events",
-                        principalColumn: "IdEvent",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("Artist_Event_pk", x => new { x.IdArtist, x.IdEvent });
                     table.ForeignKey(
                         name: "FK_Artist_Events_Artists_IdArtist",
                         column: x => x.IdArtist,
@@ -92,19 +78,11 @@ namespace kolokwiumAPBD.Migrations
                 columns: table => new
                 {
                     IdEvent = table.Column<int>(nullable: false),
-                    IdOrganiser = table.Column<int>(nullable: false),
-                    EventIdEvent = table.Column<int>(nullable: true),
-                    OrganiserIdOrganiser = table.Column<int>(nullable: true)
+                    IdOrganiser = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Event_Organisers", x => new { x.IdEvent, x.IdOrganiser });
-                    table.ForeignKey(
-                        name: "FK_Event_Organisers_Events_EventIdEvent",
-                        column: x => x.EventIdEvent,
-                        principalTable: "Events",
-                        principalColumn: "IdEvent",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Event_Organisers_Events_IdEvent",
                         column: x => x.IdEvent,
@@ -117,12 +95,6 @@ namespace kolokwiumAPBD.Migrations
                         principalTable: "Organisers",
                         principalColumn: "IdOrganiser",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Event_Organisers_Organisers_OrganiserIdOrganiser",
-                        column: x => x.OrganiserIdOrganiser,
-                        principalTable: "Organisers",
-                        principalColumn: "IdOrganiser",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -157,35 +129,25 @@ namespace kolokwiumAPBD.Migrations
 
             migrationBuilder.InsertData(
                 table: "Artist_Events",
-                columns: new[] { "IdArtist", "IdEvent", "ArtistIdArtist", "DateTime", "EventIdEvent" },
+                columns: new[] { "IdArtist", "IdEvent", "DateTime" },
                 values: new object[,]
                 {
-                    { 1, 1, null, new DateTime(2020, 7, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 2, 1, null, new DateTime(2020, 7, 11, 20, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 2, 2, null, new DateTime(2020, 7, 23, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 3, 2, null, new DateTime(2020, 7, 23, 20, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 4, 3, null, new DateTime(2020, 8, 5, 15, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 3, 3, null, new DateTime(2020, 8, 5, 19, 0, 0, 0, DateTimeKind.Unspecified), null }
+                    { 1, 1, new DateTime(2020, 7, 11, 18, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 1, new DateTime(2020, 7, 11, 20, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, new DateTime(2020, 7, 23, 18, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 2, new DateTime(2020, 7, 23, 20, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, 3, new DateTime(2020, 8, 5, 15, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 3, new DateTime(2020, 8, 5, 19, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Event_Organisers",
-                columns: new[] { "IdEvent", "IdOrganiser", "EventIdEvent", "OrganiserIdOrganiser" },
+                columns: new[] { "IdEvent", "IdOrganiser" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null },
-                    { 2, 1, null, null }
+                    { 1, 1 },
+                    { 2, 1 }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artist_Events_ArtistIdArtist",
-                table: "Artist_Events",
-                column: "ArtistIdArtist");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artist_Events_EventIdEvent",
-                table: "Artist_Events",
-                column: "EventIdEvent");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artist_Events_IdEvent",
@@ -193,19 +155,9 @@ namespace kolokwiumAPBD.Migrations
                 column: "IdEvent");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_Organisers_EventIdEvent",
-                table: "Event_Organisers",
-                column: "EventIdEvent");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Event_Organisers_IdOrganiser",
                 table: "Event_Organisers",
                 column: "IdOrganiser");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Event_Organisers_OrganiserIdOrganiser",
-                table: "Event_Organisers",
-                column: "OrganiserIdOrganiser");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

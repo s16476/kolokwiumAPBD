@@ -20,7 +20,7 @@ namespace kolokwiumAPBD.DTO
             Events = new List<EventDTO>();
             foreach(Artist_Event e in artist.Artist_Events)
             {
-                Events.Add(new EventDTO(e.Event));
+                Events.Add(new EventDTO(e.IdEventNavigation));
             }
             Events = Events.OrderBy(o => o.StartDate).ToList();
         }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace kolokwiumAPBD.Models
 {
-    public class Artist_Event
+    public partial class Artist_Event
     {
 
         public int IdEvent { get; set; }
@@ -14,9 +14,9 @@ namespace kolokwiumAPBD.Models
 
         public DateTime DateTime { get; set; }
 
-        public Artist Artist { get; set; }
+        public virtual Artist IdArtistNavigation { get; set; }
 
-        public Event Event { get; set; }
+        public virtual Event IdEventNavigation { get; set; }
 
     }
 }

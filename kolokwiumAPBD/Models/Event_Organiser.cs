@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace kolokwiumAPBD.Models
 {
-    public class Event_Organiser
+    public partial class Event_Organiser
     {
         public int IdEvent { get; set; }
 
         public int IdOrganiser { get; set; }
 
-        public Event Event { get; set; }
+        public virtual Event IdEventNavigation { get; set; }
 
-        public Organiser Organiser { get; set; }
+        public virtual Organiser IdOrganiserNavigation { get; set; }
 
     }
 }
