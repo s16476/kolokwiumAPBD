@@ -35,6 +35,9 @@ namespace kolokwiumAPBD.Services
 
                 arev.DateTime = request.performanceDate;
                 db.SaveChanges();
+            } else
+            {
+                throw new ArgumentException("performanceDate has to be between event start and finish");
             }
             return new RebookDTO
             {
