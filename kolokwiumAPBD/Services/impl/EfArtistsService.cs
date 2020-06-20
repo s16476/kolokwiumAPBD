@@ -42,7 +42,12 @@ namespace kolokwiumAPBD.Services
                 db.Attach(reb);
                 db.SaveChanges();
             }
-
+            return new RebookDTO
+            {
+                idArtist = request.idArtist,
+                idEvent = request.idEvent,
+                performanceDate = request.performanceDate
+            };
         }
     }
 }
