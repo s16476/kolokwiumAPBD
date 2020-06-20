@@ -11,9 +11,9 @@ namespace kolokwiumAPBD.Models
 
         public int IdOrganiser { get; set; }
 
-        public virtual Event Event { get; set; }
+        public Event Event { get; set; }
 
-        public virtual Organiser Organiser { get; set; }
+        public Organiser Organiser { get; set; }
 
     }
 }

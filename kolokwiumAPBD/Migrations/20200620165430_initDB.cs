@@ -73,6 +73,18 @@ namespace kolokwiumAPBD.Migrations
                         principalTable: "Events",
                         principalColumn: "IdEvent",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Artist_Events_Artists_IdArtist",
+                        column: x => x.IdArtist,
+                        principalTable: "Artists",
+                        principalColumn: "IdArtist",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Artist_Events_Events_IdEvent",
+                        column: x => x.IdEvent,
+                        principalTable: "Events",
+                        principalColumn: "IdEvent",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,6 +106,18 @@ namespace kolokwiumAPBD.Migrations
                         principalColumn: "IdEvent",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Event_Organisers_Events_IdEvent",
+                        column: x => x.IdEvent,
+                        principalTable: "Events",
+                        principalColumn: "IdEvent",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Event_Organisers_Organisers_IdOrganiser",
+                        column: x => x.IdOrganiser,
+                        principalTable: "Organisers",
+                        principalColumn: "IdOrganiser",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Event_Organisers_Organisers_OrganiserIdOrganiser",
                         column: x => x.OrganiserIdOrganiser,
                         principalTable: "Organisers",
@@ -102,36 +126,14 @@ namespace kolokwiumAPBD.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Artist_Events",
-                columns: new[] { "IdArtist", "IdEvent", "ArtistIdArtist", "DateTime", "EventIdEvent" },
-                values: new object[,]
-                {
-                    { 4, 3, null, new DateTime(2020, 8, 5, 15, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 3, 3, null, new DateTime(2020, 8, 5, 19, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 3, 2, null, new DateTime(2020, 7, 23, 20, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 2, 2, null, new DateTime(2020, 7, 23, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 1, 1, null, new DateTime(2020, 7, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 2, 1, null, new DateTime(2020, 7, 11, 20, 0, 0, 0, DateTimeKind.Unspecified), null }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Artists",
                 columns: new[] { "IdArtist", "Nickname" },
                 values: new object[,]
                 {
                     { 1, "Slash" },
-                    { 3, "Bruno" },
                     { 2, "Axel" },
+                    { 3, "Bruno" },
                     { 4, "Mick" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Event_Organisers",
-                columns: new[] { "IdEvent", "IdOrganiser", "EventIdEvent", "OrganiserIdOrganiser" },
-                values: new object[,]
-                {
-                    { 1, 1, null, null },
-                    { 2, 1, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -153,6 +155,28 @@ namespace kolokwiumAPBD.Migrations
                     { 2, "GoLIve" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Artist_Events",
+                columns: new[] { "IdArtist", "IdEvent", "ArtistIdArtist", "DateTime", "EventIdEvent" },
+                values: new object[,]
+                {
+                    { 1, 1, null, new DateTime(2020, 7, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 2, 1, null, new DateTime(2020, 7, 11, 20, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 2, 2, null, new DateTime(2020, 7, 23, 18, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 3, 2, null, new DateTime(2020, 7, 23, 20, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 4, 3, null, new DateTime(2020, 8, 5, 15, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 3, 3, null, new DateTime(2020, 8, 5, 19, 0, 0, 0, DateTimeKind.Unspecified), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Event_Organisers",
+                columns: new[] { "IdEvent", "IdOrganiser", "EventIdEvent", "OrganiserIdOrganiser" },
+                values: new object[,]
+                {
+                    { 1, 1, null, null },
+                    { 2, 1, null, null }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Artist_Events_ArtistIdArtist",
                 table: "Artist_Events",
@@ -164,9 +188,19 @@ namespace kolokwiumAPBD.Migrations
                 column: "EventIdEvent");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Artist_Events_IdEvent",
+                table: "Artist_Events",
+                column: "IdEvent");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Event_Organisers_EventIdEvent",
                 table: "Event_Organisers",
                 column: "EventIdEvent");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Event_Organisers_IdOrganiser",
+                table: "Event_Organisers",
+                column: "IdOrganiser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Event_Organisers_OrganiserIdOrganiser",

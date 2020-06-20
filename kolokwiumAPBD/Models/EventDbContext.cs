@@ -30,8 +30,49 @@ namespace kolokwiumAPBD.Models
             modelBuilder.Entity<Artist_Event>()
                 .HasKey(ae => new { ae.IdArtist, ae.IdEvent });
 
+
             modelBuilder.Entity<Event_Organiser>()
                 .HasKey(eo => new { eo.IdEvent, eo.IdOrganiser});
+
+            modelBuilder.Entity<Artist>(a =>
+            {
+                a.HasMany(e => e.Artist_Events).WithOne().IsRequired();
+            });
+
+            modelBuilder.Entity<Event>(a =>
+            {
+                a.HasMany(e => e.Artist_Events).WithOne().IsRequired();
+            });
+
+            modelBuilder.Entity<Artist_Event>(ae =>
+            {
+                ae.HasOne<Artist>().WithMany(e => e.Artist_Events).IsRequired();
+            });
+            modelBuilder.Entity<Artist_Event>(ae =>
+            {
+                ae.HasOne<Event>().WithMany(e => e.Artist_Events).IsRequired();
+            });
+
+            modelBuilder.Entity<Event>(a =>
+            {
+                a.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
+            });
+
+            modelBuilder.Entity<Organiser>(a =>
+            {
+                a.HasMany(e => e.Event_Organisers).WithOne().IsRequired();
+            });
+
+            modelBuilder.Entity<Event_Organiser>(ae =>
+            {
+                ae.HasOne<Event>().WithMany(e => e.Event_Organisers).IsRequired();
+            });
+
+            modelBuilder.Entity<Event_Organiser>(ae =>
+            {
+                ae.HasOne<Organiser>().WithMany(e => e.Event_Organisers).IsRequired();
+            });
+
 
             modelBuilder.Entity<Artist>()
                 .Property(a => a.Nickname)

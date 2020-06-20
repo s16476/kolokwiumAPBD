@@ -10,8 +10,8 @@ using kolokwiumAPBD.Models;
 namespace kolokwiumAPBD.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20200620152402_initDB")]
-    partial class initDB
+    [Migration("20200620165831_initDB1")]
+    partial class initDB1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,6 +81,8 @@ namespace kolokwiumAPBD.Migrations
                     b.HasIndex("ArtistIdArtist");
 
                     b.HasIndex("EventIdEvent");
+
+                    b.HasIndex("IdEvent");
 
                     b.ToTable("Artist_Events");
 
@@ -186,6 +188,8 @@ namespace kolokwiumAPBD.Migrations
 
                     b.HasIndex("EventIdEvent");
 
+                    b.HasIndex("IdOrganiser");
+
                     b.HasIndex("OrganiserIdOrganiser");
 
                     b.ToTable("Event_Organisers");
@@ -234,22 +238,46 @@ namespace kolokwiumAPBD.Migrations
             modelBuilder.Entity("kolokwiumAPBD.Models.Artist_Event", b =>
                 {
                     b.HasOne("kolokwiumAPBD.Models.Artist", "Artist")
-                        .WithMany("Artist_Events")
+                        .WithMany()
                         .HasForeignKey("ArtistIdArtist");
 
                     b.HasOne("kolokwiumAPBD.Models.Event", "Event")
-                        .WithMany("Artist_Events")
+                        .WithMany()
                         .HasForeignKey("EventIdEvent");
+
+                    b.HasOne("kolokwiumAPBD.Models.Artist", null)
+                        .WithMany("Artist_Events")
+                        .HasForeignKey("IdArtist")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("kolokwiumAPBD.Models.Event", null)
+                        .WithMany("Artist_Events")
+                        .HasForeignKey("IdEvent")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("kolokwiumAPBD.Models.Event_Organiser", b =>
                 {
                     b.HasOne("kolokwiumAPBD.Models.Event", "Event")
-                        .WithMany("Event_Organisers")
+                        .WithMany()
                         .HasForeignKey("EventIdEvent");
 
-                    b.HasOne("kolokwiumAPBD.Models.Organiser", "Organiser")
+                    b.HasOne("kolokwiumAPBD.Models.Event", null)
                         .WithMany("Event_Organisers")
+                        .HasForeignKey("IdEvent")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("kolokwiumAPBD.Models.Organiser", null)
+                        .WithMany("Event_Organisers")
+                        .HasForeignKey("IdOrganiser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("kolokwiumAPBD.Models.Organiser", "Organiser")
+                        .WithMany()
                         .HasForeignKey("OrganiserIdOrganiser");
                 });
 #pragma warning restore 612, 618

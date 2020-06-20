@@ -14,9 +14,9 @@ namespace kolokwiumAPBD.Models
 
         public DateTime DateTime { get; set; }
 
-        public virtual Artist Artist { get; set; }
+        public Artist Artist { get; set; }
 
-        public virtual Event Event { get; set; }
+        public Event Event { get; set; }
 
     }
 }
