@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using kolokwiumAPBD.Models;
+using kolokwiumAPBD.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace kolokwiumAPBD
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IArtistsService, EfArtistsService>();
             services.AddDbContext<EventDbContext>(options =>
             {
                 options.UseSqlServer("Data Source=localhost,1433;Initial Catalog=apbd-kolokwium;Integrated Security=True");
